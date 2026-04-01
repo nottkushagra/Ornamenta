@@ -1,0 +1,56 @@
+/* collection.css - styles for the collection/shop page */
+
+/* filter tabs */
+.collection-section {
+    padding: 60px 60px 100px;
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-tab:hover {
+    border-color: rgba(160, 160, 160, 0.3);
+    color: #fff;
+}
+
+.filter-tab.active {
+    background-color: #a0a0a0;
+    color: #0a0f0a;
+    border-color: #a0a0a0;
+}
+
+/* hide cards when filtered out */
+.collection-grid .card {
+    transition: all 0.4s ease, opacity 0.4s ease;
+}
+
+.collection-grid .card.hidden {
+    display: none;
+}
+
+
+/* mobile */
+@media (max-width: 768px) {
+    .collection-section {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}

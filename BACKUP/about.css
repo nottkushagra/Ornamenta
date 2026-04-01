@@ -1,0 +1,115 @@
+/* about.css - styles for the about page */
+
+/* about hero */
+.about-hero {
+    padding: 120px 60px 80px;
+    text-align: center;
+    background: radial-gradient(ellipse at center, #121a12 0%, #0a0f0a 70%);
+}
+
+.about-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 6px;
+    color: #fff;
+}
+
+.about-intro {
+    max-width: 700px;
+    margin: 24px auto 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+/* --- values section --- */
+.values-section {
+    padding: 100px 60px;
+    background-color: #0d120d;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.value-card {
+    text-align: center;
+    padding: 40px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.02);
+    transition: all 0.4s ease;
+}
+
+.value-card:hover {
+    border-color: rgba(160, 160, 160, 0.2);
+    transform: translateY(-4px);
+}
+
+.value-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #a0a0a0;
+}
+
+.value-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.value-card p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* --- founder quote section --- */
+.founder-section {
+    padding: 100px 60px;
+    text-align: center;
+    background: linear-gradient(to right, rgba(160, 160, 160, 0.04), transparent, rgba(160, 160, 160, 0.04));
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.founder-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.founder-content .section-title {
+    margin-bottom: 30px;
+}
+
+.founder-content p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 17px;
+    line-height: 1.9;
+    font-style: italic;
+}
+
+.founder-name {
+    display: block;
+    margin-top: 24px;
+    color: #a0a0a0;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+/* mobile */
+@media (max-width: 768px) {
+    .values-section,
+    .founder-section,
+    .about-hero {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
