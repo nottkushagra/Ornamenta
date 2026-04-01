@@ -118,3 +118,41 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+// --- 🔥 Milestone 2: API Integration ---
+var apiGrid = document.getElementById("product-grid");
+var loadingText = document.getElementById("loading");
+
+if (apiGrid) {
+    fetch("https://fakestoreapi.com/products")
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+
+            if (loadingText) {
+                loadingText.style.display = "none";
+            }
+
+            apiGrid.innerHTML = data.map(function (item) {
+                return `
+                    <div class="card fade-in" data-category="${item.category}">
+                        <img src="${item.image}" alt="${item.title}">
+                        <h3>${item.title}</h3>
+                        <p>₹ ${item.price}</p>
+                    </div>
+                `;
+            }).join("");
+
+            // reapply fade-in animation
+            var newCards = document.querySelectorAll('#product-grid .fade-in');
+            newCards.forEach(function (card) {
+                observer.observe(card);
+            });
+
+        })
+        .catch(function () {
+            if (loadingText) {
+                loadingText.innerText = "Failed to load products.";
+            }
+        });
+}
