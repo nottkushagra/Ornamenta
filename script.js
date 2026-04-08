@@ -1,56 +1,75 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Fade-in Observer
     var fadeElements = document.querySelectorAll('.fade-in');
 
     var observer = new IntersectionObserver(function (entries) {
-        for (var i = 0; i < entries.length; i++) {
-            if (entries[i].isIntersecting) {
-                entries[i].target.classList.add('visible');
-                observer.unobserve(entries[i].target);
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
             }
-        }
+        });
     }, {
         threshold: 0.15,
         rootMargin: '0px 0px -40px 0px'
     });
 
-    for (var i = 0; i < fadeElements.length; i++) {
-        observer.observe(fadeElements[i]);
+    fadeElements.forEach(function (el) {
+        observer.observe(el);
+    });
+
+
+    // Dark / Light Mode Toggle
+    var themeToggle = document.getElementById('themeToggle');
+    var savedTheme = localStorage.getItem('ornamenta-theme') || 'dark';
+
+    document.body.setAttribute('data-theme', savedTheme);
+    if (themeToggle) {
+        themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+        themeToggle.addEventListener('click', function () {
+            var current = document.body.getAttribute('data-theme');
+            var next = current === 'dark' ? 'light' : 'dark';
+
+            document.body.setAttribute('data-theme', next);
+            localStorage.setItem('ornamenta-theme', next);
+            themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+        });
     }
 
 
-    // Filter Tabs
+    // Filter Tabs (static collection cards)
     var filterButtons = document.querySelectorAll('.filter-tab');
     var productCards = document.querySelectorAll('.collection-grid .card');
 
-    for (var i = 0; i < filterButtons.length; i++) {
-        filterButtons[i].addEventListener('click', function () {
-            for (var j = 0; j < filterButtons.length; j++) {
-                filterButtons[j].classList.remove('active');
-            }
-            this.classList.add('active');
+    filterButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            filterButtons.forEach(function (b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
 
-            var selectedFilter = this.getAttribute('data-filter');
+            var selectedFilter = btn.getAttribute('data-filter');
 
-            for (var k = 0; k < productCards.length; k++) {
-                var card = productCards[k];
+            productCards.forEach(function (card) {
                 var category = card.getAttribute('data-category');
 
                 if (selectedFilter === 'all' || category === selectedFilter) {
                     card.classList.remove('hidden');
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(20px)';
-                    setTimeout(function (c) {
-                        c.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                        c.style.opacity = '1';
-                        c.style.transform = 'translateY(0)';
-                    }, 10, card);
+                    setTimeout(function () {
+                        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
                 } else {
                     card.classList.add('hidden');
                 }
-            }
+            });
         });
-    }
+    });
 
 
     // Contact Form
@@ -90,26 +109,26 @@ document.addEventListener('DOMContentLoaded', function () {
     // FAQ Accordion
     var faqItems = document.querySelectorAll('.faq-item');
 
-    for (var i = 0; i < faqItems.length; i++) {
-        faqItems[i].querySelector('.faq-question').addEventListener('click', function () {
-            var thisItem = this.parentElement;
-            var alreadyOpen = thisItem.classList.contains('open');
+    faqItems.forEach(function (item) {
+        item.querySelector('.faq-question').addEventListener('click', function () {
+            var alreadyOpen = item.classList.contains('open');
 
-            for (var j = 0; j < faqItems.length; j++) {
-                faqItems[j].classList.remove('open');
-            }
+            faqItems.forEach(function (faq) {
+                faq.classList.remove('open');
+            });
 
             if (!alreadyOpen) {
-                thisItem.classList.add('open');
+                item.classList.add('open');
             }
         });
-    }
+    });
 
 
     // DummyJSON API
     var apiGrid = document.getElementById("product-grid");
     var loadingText = document.getElementById("loading");
     var allProducts = [];
+    var favorites = JSON.parse(localStorage.getItem('ornamenta-favorites') || '[]');
 
     var apiUrls = [
         "https://dummyjson.com/products/category/womens-jewellery",
@@ -118,19 +137,15 @@ document.addEventListener('DOMContentLoaded', function () {
         "https://dummyjson.com/products/category/sunglasses"
     ];
 
+    // Higher-Order Function: .map() to build star string using Array
     function makeStars(rating) {
-        var stars = "";
         var fullStars = Math.floor(rating);
-        for (var i = 0; i < fullStars; i++) {
-            stars = stars + "★";
-        }
-        if (rating - fullStars >= 0.5) {
-            stars = stars + "½";
-        }
-        var remaining = 5 - fullStars - (rating - fullStars >= 0.5 ? 1 : 0);
-        for (var i = 0; i < remaining; i++) {
-            stars = stars + "☆";
-        }
+        var hasHalf = (rating - fullStars) >= 0.5;
+        var emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+
+        var stars = Array(fullStars).fill('★').join('')
+                  + (hasHalf ? '½' : '')
+                  + Array(emptyStars).fill('☆').join('');
         return stars;
     }
 
@@ -139,6 +154,20 @@ document.addEventListener('DOMContentLoaded', function () {
         return "₹ " + inr.toLocaleString("en-IN");
     }
 
+    function isFavorited(productId) {
+        return favorites.find(function (id) { return id === productId; }) !== undefined;
+    }
+
+    function toggleFavorite(productId) {
+        if (isFavorited(productId)) {
+            favorites = favorites.filter(function (id) { return id !== productId; });
+        } else {
+            favorites.push(productId);
+        }
+        localStorage.setItem('ornamenta-favorites', JSON.stringify(favorites));
+    }
+
+    // Higher-Order Function: .map().join() to render product cards
     function renderProducts(products) {
         if (!apiGrid) return;
 
@@ -147,59 +176,62 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        var html = "";
-
-        for (var i = 0; i < products.length; i++) {
-            var item = products[i];
+        var html = products.map(function (item) {
             var price = toINR(item.price);
             var stars = makeStars(item.rating);
-            var ratingNum = Math.round(item.rating * 10) / 10;
+            var ratingNum = (Math.round(item.rating * 10) / 10).toFixed(1);
             var categoryName = item.category.split("-").join(" ");
+            var favClass = isFavorited(item.id) ? ' favorited' : '';
 
-            var discountHTML = "";
-            if (item.discountPercentage > 5) {
-                discountHTML = '<span class="api-discount">-' + Math.round(item.discountPercentage) + '%</span>';
-            }
+            var discountHTML = item.discountPercentage > 5
+                ? '<span class="api-discount">-' + Math.round(item.discountPercentage) + '%</span>'
+                : '';
 
-            var stockHTML = "";
-            var stockClass = "";
+            var stockHTML = '';
+            var stockClass = '';
             if (item.availabilityStatus === "Low Stock") {
                 stockHTML = '<span class="stock-badge">Few Left</span>';
-                stockClass = " low-stock";
+                stockClass = ' low-stock';
             }
 
-            html = html + '<div class="card api-card fade-in' + stockClass + '">';
-            html = html + discountHTML;
-            html = html + stockHTML;
-            html = html + '<img src="' + item.thumbnail + '" alt="' + item.title + '">';
-            html = html + '<h3>' + item.title + '</h3>';
-            html = html + '<div class="api-rating">' + stars + ' <span>' + ratingNum + '</span></div>';
-            html = html + '<p class="api-price">' + price + '</p>';
-            html = html + '<span class="api-category">' + categoryName + '</span>';
-            html = html + '</div>';
-        }
+            return '<div class="card api-card fade-in' + stockClass + '">'
+                + '<button class="fav-btn' + favClass + '" data-id="' + item.id + '" title="Add to favorites">♥</button>'
+                + discountHTML
+                + stockHTML
+                + '<img src="' + item.thumbnail + '" alt="' + item.title + '">'
+                + '<h3>' + item.title + '</h3>'
+                + '<div class="api-rating">' + stars + ' <span>' + ratingNum + '</span></div>'
+                + '<p class="api-price">' + price + '</p>'
+                + '<span class="api-category">' + categoryName + '</span>'
+                + '</div>';
+        }).join("");
 
         apiGrid.innerHTML = html;
 
-        var newCards = apiGrid.querySelectorAll('.fade-in');
-        for (var i = 0; i < newCards.length; i++) {
-            observer.observe(newCards[i]);
-        }
+        // Reapply fade-in observer to new cards
+        apiGrid.querySelectorAll('.fade-in').forEach(function (card) {
+            observer.observe(card);
+        });
+
+        // Attach favorite button click handlers
+        apiGrid.querySelectorAll('.fav-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var productId = Number(btn.getAttribute('data-id'));
+                toggleFavorite(productId);
+                btn.classList.toggle('favorited');
+            });
+        });
     }
 
+    // Fetch all categories and merge using .concat()
     var completedFetches = 0;
 
     function fetchCategory(url) {
         fetch(url)
-            .then(function (response) {
-                return response.json();
-            })
+            .then(function (response) { return response.json(); })
             .then(function (data) {
-                for (var i = 0; i < data.products.length; i++) {
-                    allProducts.push(data.products[i]);
-                }
-
-                completedFetches = completedFetches + 1;
+                allProducts = allProducts.concat(data.products);
+                completedFetches++;
 
                 if (completedFetches === apiUrls.length) {
                     if (loadingText) loadingText.style.display = "none";
@@ -207,75 +239,98 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(function () {
-                completedFetches = completedFetches + 1;
+                completedFetches++;
                 if (completedFetches === apiUrls.length) {
-                    if (loadingText) {
-                        loadingText.innerText = "Failed to load some products.";
-                    }
-                    if (allProducts.length > 0) {
-                        renderProducts(allProducts);
-                    }
+                    if (loadingText) loadingText.innerText = "Failed to load some products.";
+                    if (allProducts.length > 0) renderProducts(allProducts);
                 }
             });
     }
 
     if (apiGrid) {
-        for (var i = 0; i < apiUrls.length; i++) {
-            fetchCategory(apiUrls[i]);
-        }
+        apiUrls.forEach(function (url) {
+            fetchCategory(url);
+        });
     }
 
 
-    // Search
+    // Search — Higher-Order Function: .filter() with .includes()
     var searchInput = document.getElementById("searchInput");
 
     if (searchInput) {
         searchInput.addEventListener("input", function () {
-            var value = searchInput.value.toLowerCase();
-            var filtered = [];
+            var query = searchInput.value.toLowerCase();
 
-            for (var i = 0; i < allProducts.length; i++) {
-                var title = allProducts[i].title.toLowerCase();
-                var category = allProducts[i].category.toLowerCase();
+            var filtered = allProducts.filter(function (item) {
+                return item.title.toLowerCase().includes(query)
+                    || item.category.toLowerCase().includes(query);
+            });
 
-                if (title.indexOf(value) !== -1 || category.indexOf(value) !== -1) {
-                    filtered.push(allProducts[i]);
-                }
-            }
-
-            renderProducts(filtered);
+            applySort(filtered);
         });
     }
 
 
-    // Sort
+    // Category Filter Dropdown — Higher-Order Function: .filter()
+    var categoryFilter = document.getElementById("categoryFilter");
+
+    if (categoryFilter) {
+        categoryFilter.addEventListener("change", function () {
+            applyFilters();
+        });
+    }
+
+
+    // Sort — Higher-Order Function: .slice().sort()
     var sortSelect = document.getElementById("sortSelect");
 
     if (sortSelect) {
         sortSelect.addEventListener("change", function () {
-            var value = sortSelect.value;
-
-            var sorted = [];
-            for (var i = 0; i < allProducts.length; i++) {
-                sorted.push(allProducts[i]);
-            }
-
-            if (value === "low-high") {
-                sorted.sort(function (a, b) {
-                    return a.price - b.price;
-                });
-            } else if (value === "high-low") {
-                sorted.sort(function (a, b) {
-                    return b.price - a.price;
-                });
-            } else if (value === "rating") {
-                sorted.sort(function (a, b) {
-                    return b.rating - a.rating;
-                });
-            }
-
-            renderProducts(sorted);
+            applyFilters();
         });
+    }
+
+    // Combined filter + sort pipeline using HOFs
+    function applyFilters() {
+        var query = searchInput ? searchInput.value.toLowerCase() : '';
+        var category = categoryFilter ? categoryFilter.value : 'all';
+
+        // Step 1: .filter() by search query
+        var results = allProducts.filter(function (item) {
+            return item.title.toLowerCase().includes(query)
+                || item.category.toLowerCase().includes(query);
+        });
+
+        // Step 2: .filter() by category
+        if (category !== 'all') {
+            results = results.filter(function (item) {
+                return item.category === category;
+            });
+        }
+
+        // Step 3: apply sort
+        applySort(results);
+    }
+
+    function applySort(products) {
+        var value = sortSelect ? sortSelect.value : 'default';
+
+        // .slice() to copy, then .sort()
+        var sorted = products.slice().sort(function (a, b) {
+            if (value === "low-high") return a.price - b.price;
+            if (value === "high-low") return b.price - a.price;
+            if (value === "rating") return b.rating - a.rating;
+            return 0;
+        });
+
+        renderProducts(sorted);
+    }
+
+    // Favorites count using .reduce()
+    function getFavoritesCount() {
+        return favorites.reduce(function (count) {
+            return count + 1;
+        }, 0);
     }
 
 });

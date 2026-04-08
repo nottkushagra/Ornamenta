@@ -21,6 +21,7 @@
             <a href="collection.html" class="active">Collections</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
+            <button id="themeToggle" class="theme-toggle" title="Toggle light/dark mode">☀️</button>
         </nav>
     </header>
 
@@ -40,6 +41,13 @@
 
         <div class="api-controls fade-in">
             <input type="text" id="searchInput" placeholder="Search jewelry, watches, sunglasses…" autocomplete="off">
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="womens-jewellery">Jewelry</option>
+                <option value="mens-watches">Men's Watches</option>
+                <option value="womens-watches">Women's Watches</option>
+                <option value="sunglasses">Sunglasses</option>
+            </select>
             <select id="sortSelect">
                 <option value="default">Sort by</option>
                 <option value="low-high">Price: Low → High</option>

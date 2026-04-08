@@ -281,3 +281,297 @@ footer {
         padding-right: 24px;
     }
 }
+
+
+.theme-toggle {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 16px;
+    padding: 6px 10px;
+    margin-left: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+
+.theme-toggle:hover {
+    border-color: rgba(160, 160, 160, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+.fav-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 2;
+    padding: 0;
+    line-height: 1;
+}
+
+.fav-btn:hover {
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.4);
+    background: rgba(231, 76, 60, 0.1);
+    transform: scale(1.15);
+}
+
+.fav-btn.favorited {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.15);
+    border-color: rgba(231, 76, 60, 0.4);
+}
+
+
+[data-theme="light"] {
+    background-color: #f5f3ef;
+    color: #1a1a1a;
+}
+
+[data-theme="light"] header {
+    background-color: rgba(245, 243, 239, 0.97);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .logo,
+[data-theme="light"] .logo a {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] nav a {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] nav a:hover,
+[data-theme="light"] nav a.active {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] nav a::after {
+    background-color: #555;
+}
+
+[data-theme="light"] .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .hero,
+[data-theme="light"] .page-hero,
+[data-theme="light"] .about-hero {
+    background: radial-gradient(ellipse at center, #e8e4dc 0%, #f5f3ef 70%);
+}
+
+[data-theme="light"] .hero h1,
+[data-theme="light"] .page-hero h1,
+[data-theme="light"] .about-hero h1,
+[data-theme="light"] h1, [data-theme="light"] h2, [data-theme="light"] h3 {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .hero p,
+[data-theme="light"] .page-hero p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .btn {
+    border-color: rgba(100, 100, 100, 0.4);
+    color: #555;
+}
+
+[data-theme="light"] .btn:hover {
+    background-color: #555;
+    color: #fff;
+    border-color: #555;
+}
+
+[data-theme="light"] .section-title {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .card {
+    background: linear-gradient(145deg, #fff, #f7f5f1);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .card:hover {
+    border-color: rgba(100, 100, 100, 0.25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 30px rgba(100, 100, 100, 0.05);
+}
+
+[data-theme="light"] .card h3 {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .card p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .card img {
+    filter: grayscale(10%);
+}
+
+[data-theme="light"] .price {
+    color: #555 !important;
+}
+
+[data-theme="light"] footer {
+    border-top-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .products {
+    background-color: #f5f3ef;
+}
+
+[data-theme="light"] .features-section,
+[data-theme="light"] .values-section,
+[data-theme="light"] .faq-section {
+    background-color: #ece9e2;
+}
+
+[data-theme="light"] .feature-card,
+[data-theme="light"] .value-card {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .feature-card:hover,
+[data-theme="light"] .value-card:hover {
+    border-color: rgba(100, 100, 100, 0.2);
+}
+
+[data-theme="light"] .feature-card p,
+[data-theme="light"] .value-card p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .feature-icon,
+[data-theme="light"] .value-icon {
+    color: #666;
+}
+
+[data-theme="light"] .newsletter {
+    background: linear-gradient(to right, rgba(100, 100, 100, 0.06), transparent, rgba(100, 100, 100, 0.06));
+    border-top-color: rgba(0, 0, 0, 0.06);
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .newsletter > p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .newsletter-form input {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .newsletter-form input::placeholder {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .about-intro {
+    color: rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] .founder-section {
+    background: linear-gradient(to right, rgba(100, 100, 100, 0.05), transparent, rgba(100, 100, 100, 0.05));
+    border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .founder-content p {
+    color: rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] .founder-name {
+    color: #666;
+}
+
+[data-theme="light"] .faq-question {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .faq-question::after {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .faq-item.open .faq-question::after {
+    color: #555;
+}
+
+[data-theme="light"] .faq-question:hover {
+    color: #555;
+}
+
+[data-theme="light"] .faq-answer p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .faq-item {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .form-group label {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .contact-info h2,
+[data-theme="light"] .contact-form-wrapper h2 {
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .info-item h4 {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] .info-item p,
+[data-theme="light"] .info-item a {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="light"] .socials a {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .form-success {
+    color: #555;
+}
+
+[data-theme="light"] .fav-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.3);
+}
