@@ -24,7 +24,6 @@
         </nav>
     </header>
 
-    <!-- hero -->
     <section class="page-hero">
         <div class="fade-in">
             <h1>The Collection</h1>
@@ -32,7 +31,30 @@
         </div>
     </section>
 
-    <!-- filter + products -->
+    <section class="api-section">
+        <div class="api-header fade-in">
+            <span class="api-tag">&#10022; Trending</span>
+            <h2 class="api-title">Global Picks</h2>
+            <p class="api-subtitle">Curated jewelry, watches &amp; accessories from around the world.</p>
+        </div>
+
+        <div class="api-controls fade-in">
+            <input type="text" id="searchInput" placeholder="Search jewelry, watches, sunglasses…" autocomplete="off">
+            <select id="sortSelect">
+                <option value="default">Sort by</option>
+                <option value="low-high">Price: Low → High</option>
+                <option value="high-low">Price: High → Low</option>
+                <option value="rating">Top Rated</option>
+            </select>
+        </div>
+
+        <div class="grid" id="product-grid">
+            <p id="loading" style="text-align:center; opacity:0.6;">
+                Loading products...
+            </p>
+        </div>
+    </section>
+
     <section class="collection-section">
         <div class="filter-tabs fade-in">
             <button class="filter-tab active" data-filter="all">All</button>
@@ -44,14 +66,7 @@
         </div>
 
         <div class="grid collection-grid">
-            <!-- 🔽 API PRODUCTS (Milestone 2) -->
-            <div class="grid" id="product-grid">
-                <p id="loading" style="text-align:center; opacity:0.6;">
-                    Loading products...
-                </p>
-            </div>
 
-            <!-- rings -->
             <div class="card fade-in" data-category="rings">
                 <img src="images/obsidian-ring.png" alt="Obsidian Ring">
                 <h3>Obsidian Ring</h3>
@@ -73,7 +88,6 @@
                 <a href="#" class="btn btn-sm">View Details</a>
             </div>
 
-            <!-- chains -->
             <div class="card fade-in" data-category="chains">
                 <img src="images/steel-chain.png" alt="Steel Chain">
                 <h3>Steel Chain</h3>
@@ -109,7 +123,6 @@
                 <a href="#" class="btn btn-sm">View Details</a>
             </div>
 
-            <!-- pendants -->
             <div class="card fade-in" data-category="pendants">
                 <img src="images/onyx-pendant.png" alt="Onyx Pendant">
                 <h3>Onyx Pendant</h3>
@@ -152,7 +165,6 @@
                 <a href="#" class="btn btn-sm">View Details</a>
             </div>
 
-            <!-- bracelets -->
             <div class="card fade-in" data-category="bracelets">
                 <img src="images/matte-cuff.png" alt="Matte Wrist Cuff">
                 <h3>Matte Wrist Cuff</h3>
@@ -181,7 +193,6 @@
                 <a href="#" class="btn btn-sm">View Details</a>
             </div>
 
-            <!-- earrings -->
             <div class="card fade-in" data-category="earrings">
                 <img src="images/silver-earrings.png" alt="Oxidized Silver Hoops">
                 <h3>Oxidized Silver Hoops</h3>
@@ -255,7 +266,6 @@
         </div>
     </section>
 
-    <!-- heritage collection - indian jewels -->
     <section class="heritage-section">
         <div class="heritage-header fade-in">
             <span class="heritage-tag">&#10022; Exclusive</span>
