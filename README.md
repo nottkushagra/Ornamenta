@@ -1,100 +1,87 @@
 # Ornamenta
 
 Ornamenta is a modern jewellery brand that blends bold design with a refined, masculine aesthetic, offering a seamless platform to explore, search, and discover premium pieces with precision and ease.
+A masculine/unisex jewelry website I built as my web development project. The idea was to create something that actually looks and feels like a real brand — not just a basic HTML page with some buttons.
 
-## 🌐 Live Demo
+Ornamenta lets you browse handcrafted jewelry, search through API-fetched products, save favorites, toggle dark/light mode, and more.
 
-🔗 [https://nottkushagra.github.io/Ornamenta/](https://nottkushagra.github.io/Ornamenta/)
-
-## ✨ Features
-
-- **Multi-Page Website** — Landing, Home, Collections, About, and Contact pages
-- **API Integration** — Fetches real product data from [DummyJSON API](https://dummyjson.com) across 4 categories
-- **Search with Debouncing** — Search products by title or category with a 300ms debounce delay
-- **Category Filter** — Dropdown filter for jewelry, watches, and sunglasses
-- **Sort** — Sort by price (low/high) or top-rated
-- **Static Filter Tabs** — Filter handcrafted collection by rings, chains, pendants, bracelets, and earrings
-- **Favorites** — Heart button to save favorite products (persisted via localStorage)
-- **Dark / Light Mode** — Toggle theme with preference saved in localStorage
-- **Loading Spinner** — Animated spinner shown while API products load
-- **FAQ Accordion** — Expandable Q&A section on the Contact page
-- **Newsletter Signup** — Email subscription with inline confirmation
-- **Contact Form** — Form with validation and success message
-- **Heritage Collection** — Exclusive Indian-themed jewelry section (Roots & Regalia)
-- **Responsive Design** — Fully responsive across mobile, tablet, and desktop
-- **Fade-in Animations** — Scroll-triggered entrance animations using IntersectionObserver
-
-## 🛠️ Tech Stack
-
-| Technology | Usage |
-|---|---|
-| HTML5 | Structure and semantic markup |
-| CSS3 | Styling, animations, responsive design |
-| JavaScript (ES5/ES6) | Logic, DOM manipulation, API calls |
-| [DummyJSON API](https://dummyjson.com) | Product data source |
-| Google Fonts | Typography (Playfair Display, Inter) |
-| GitHub Pages | Deployment |
-
-## 📁 Project Structure
-
-```
-Ornamenta/
-├── index.html          Landing page
-├── home.html           Home page with features & bestsellers
-├── collection.html     Collections with API products & static catalog
-├── about.html          Brand story & values
-├── contact.html        Contact form, info & FAQ
-├── style.css           Global styles & light/dark mode
-├── home.css            Home page specific styles
-├── collection.css      Collection page specific styles
-├── about.css           About page specific styles
-├── contact.css         Contact page specific styles
-├── script.js           All JavaScript logic
-├── images/             Product images (40 items)
-└── README.md
-```
-
-## 🚀 Higher-Order Functions Used
-
-| Function | HOF Used | Purpose |
-|---|---|---|
-| `makeStars()` | `Array().fill().join()` | Build star rating string from numeric rating |
-| `renderProducts()` | `.map().join()` | Transform product data into HTML cards |
-| `fetchCategory()` | `.concat()` | Merge products from multiple API endpoints |
-| Search | `.filter().includes()` | Filter products matching search query |
-| Category Filter | `.filter()` | Filter by selected category |
-| Sort | `.slice().sort()` | Sort products by price or rating |
-| `toggleFavorite()` | `.filter()` | Remove product from favorites array |
-| `isFavorited()` | `.find()` | Check if product is in favorites |
-| `getFavoritesCount()` | `.reduce()` | Count total favorited items |
-
-## ⭐ Bonus Features Implemented
-
-- ✅ **Debouncing** — Applied to search input (300ms delay) to prevent filtering on every keystroke
-- ✅ **Loading Indicator** — Animated CSS spinner shown while fetching API data
-- ✅ **Local Storage** — Used for dark/light theme preference and saved favorites
-
-## 💻 How to Run Locally
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/nottkushagra/Ornamenta.git
-   ```
-
-2. Open `index.html` in your browser — no build step needed.
-
-## 📱 Responsive Breakpoints
-
-- **Desktop** — Full layout with spacious padding
-- **Tablet / Mobile (≤768px)** — Stacked navigation, adjusted padding, single-column grids
-
-## 🎨 Design Choices
-
-- **Dark-first design** with a subtle green-black gradient palette
-- **Playfair Display** for headings (elegant serif) + **Inter** for body text (clean sans-serif)
-- **Minimal color palette** — `#0a0f0a` (background), `#a0a0a0` (accent), `#d4af37` (gold for API products)
-- **Micro-interactions** — Hover lifts on cards, underline animations on nav links, grayscale-to-color on images
+**Live Site:** [https://nottkushagra.github.io/Ornamenta/](https://nottkushagra.github.io/Ornamenta/)
 
 ---
 
-Built by **Kushagra** • 2026
+## What It Does
+
+- 5 pages — Landing, Home, Collections, About, Contact
+- Pulls real product data from [DummyJSON API](https://dummyjson.com) (jewelry, watches, sunglasses)
+- Search bar with **debouncing** so it doesn't filter on every single keystroke
+- Filter by category + sort by price or rating
+- Static collection with tab filters (rings, chains, pendants, bracelets, earrings)
+- Favorite/heart button that saves to localStorage
+- Dark and light mode (also saved in localStorage)
+- Animated loading spinner while API data loads
+- FAQ accordion, newsletter signup, contact form
+- Heritage section with Indian-themed jewelry (Roots & Regalia)
+- Fully responsive — works on phone, tablet, desktop
+- Scroll-triggered fade-in animations
+
+## Tech Used
+
+- HTML, CSS, JavaScript (vanilla, no frameworks)
+- [DummyJSON API](https://dummyjson.com) for product data
+- Google Fonts (Playfair Display + Inter)
+- Deployed on GitHub Pages
+
+## Project Structure
+
+```
+Ornamenta/
+├── index.html          # Landing page
+├── home.html           # Home — features, bestsellers, newsletter
+├── collection.html     # Collections — API products + static catalog
+├── about.html          # Brand story and values
+├── contact.html        # Contact form, info, FAQ
+├── style.css           # Global styles + dark/light mode
+├── home.css            # Home page styles
+├── collection.css      # Collection page styles
+├── about.css           # About page styles
+├── contact.css         # Contact page styles
+├── script.js           # All the JS logic
+├── images/             # 40 product images
+└── README.md
+```
+
+## Higher-Order Functions I Used
+
+This was a key requirement for the project, so here's where I used them:
+
+| Where | HOF | What it does |
+|---|---|---|
+| Star ratings | `Array().fill().join()` | Turns a number like 4.5 into ★★★★½☆ |
+| Rendering cards | `.map().join()` | Converts product data array into HTML |
+| Merging API data | `.concat()` | Combines products from 4 different API categories |
+| Search | `.filter().includes()` | Filters products that match the search query |
+| Category filter | `.filter()` | Keeps only products from the selected category |
+| Sorting | `.slice().sort()` | Sorts products by price or rating without mutating original |
+| Remove favorite | `.filter()` | Removes a product ID from the favorites array |
+| Check favorite | `.find()` | Checks if a product is already favorited |
+| Count favorites | `.reduce()` | Counts total favorited items |
+
+## Bonus Features
+
+- **Debouncing** — search input waits 300ms before filtering (avoids unnecessary work)
+- **Loading Spinner** — animated spinner while API products are being fetched
+- **localStorage** — saves theme preference and favorite items across sessions
+
+## How to Run
+
+Just clone it and open `index.html`:
+
+```bash
+git clone https://github.com/nottkushagra/Ornamenta.git
+```
+
+No npm, no build tools, nothing to install. It's plain HTML/CSS/JS.
+
+---
+
+Made by Kushagra · 2026
