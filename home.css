@@ -1,3 +1,4 @@
+/* Hero */
 .hero {
     height: 90vh;
     display: flex;
@@ -40,6 +41,7 @@
     text-transform: uppercase;
 }
 
+/* Features */
 .features-section {
     padding: 100px 60px;
     background-color: #0d120d;
@@ -85,6 +87,7 @@
     line-height: 1.7;
 }
 
+/* Newsletter */
 .newsletter {
     padding: 80px 60px;
     text-align: center;
@@ -136,6 +139,7 @@
     border-left: none;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
     .hero h1 {
         letter-spacing: 6px;

@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Debounce — delays function execution until user stops typing
+    function debounce(func, delay) {
+        var timer;
+        return function () {
+            var context = this;
+            var args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                func.apply(context, args);
+            }, delay);
+        };
+    }
+
     // Fade-in Observer
     var fadeElements = document.querySelectorAll('.fade-in');
 
@@ -39,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // Filter Tabs (static collection cards)
+    // Filter Tabs
     var filterButtons = document.querySelectorAll('.filter-tab');
     var productCards = document.querySelectorAll('.collection-grid .card');
 
@@ -126,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // DummyJSON API
     var apiGrid = document.getElementById("product-grid");
-    var loadingText = document.getElementById("loading");
+    var loadingEl = document.getElementById("loading");
     var allProducts = [];
     var favorites = JSON.parse(localStorage.getItem('ornamenta-favorites') || '[]');
 
@@ -137,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "https://dummyjson.com/products/category/sunglasses"
     ];
 
-    // Higher-Order Function: .map() to build star string using Array
+    // Higher-Order Function: .map() to build star string
     function makeStars(rating) {
         var fullStars = Math.floor(rating);
         var hasHalf = (rating - fullStars) >= 0.5;
@@ -194,26 +207,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 stockClass = ' low-stock';
             }
 
-            return '<div class="card api-card fade-in' + stockClass + '">'
-                + '<button class="fav-btn' + favClass + '" data-id="' + item.id + '" title="Add to favorites">♥</button>'
-                + discountHTML
-                + stockHTML
-                + '<img src="' + item.thumbnail + '" alt="' + item.title + '">'
-                + '<h3>' + item.title + '</h3>'
-                + '<div class="api-rating">' + stars + ' <span>' + ratingNum + '</span></div>'
-                + '<p class="api-price">' + price + '</p>'
-                + '<span class="api-category">' + categoryName + '</span>'
-                + '</div>';
+            return `<div class="card api-card fade-in${stockClass}">
+                <button class="fav-btn${favClass}" data-id="${item.id}" title="Add to favorites">♥</button>
+                ${discountHTML}
+                ${stockHTML}
+                <img src="${item.thumbnail}" alt="${item.title}">
+                <h3>${item.title}</h3>
+                <div class="api-rating">${stars} <span>${ratingNum}</span></div>
+                <p class="api-price">${price}</p>
+                <span class="api-category">${categoryName}</span>
+            </div>`;
         }).join("");
 
         apiGrid.innerHTML = html;
 
-        // Reapply fade-in observer to new cards
         apiGrid.querySelectorAll('.fade-in').forEach(function (card) {
             observer.observe(card);
         });
 
-        // Attach favorite button click handlers
         apiGrid.querySelectorAll('.fav-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 var productId = Number(btn.getAttribute('data-id'));
@@ -223,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Fetch all categories and merge using .concat()
+    // Fetch all categories using .concat()
     var completedFetches = 0;
 
     function fetchCategory(url) {
@@ -234,14 +245,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 completedFetches++;
 
                 if (completedFetches === apiUrls.length) {
-                    if (loadingText) loadingText.style.display = "none";
+                    if (loadingEl) loadingEl.style.display = "none";
                     renderProducts(allProducts);
                 }
             })
             .catch(function () {
                 completedFetches++;
                 if (completedFetches === apiUrls.length) {
-                    if (loadingText) loadingText.innerText = "Failed to load some products.";
+                    if (loadingEl) loadingEl.innerHTML = '<p style="opacity:0.6;">Failed to load some products.</p>';
                     if (allProducts.length > 0) renderProducts(allProducts);
                 }
             });
@@ -255,23 +266,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Search — Higher-Order Function: .filter() with .includes()
+    // Debounced to avoid filtering on every keystroke (300ms delay)
     var searchInput = document.getElementById("searchInput");
 
     if (searchInput) {
-        searchInput.addEventListener("input", function () {
-            var query = searchInput.value.toLowerCase();
-
-            var filtered = allProducts.filter(function (item) {
-                return item.title.toLowerCase().includes(query)
-                    || item.category.toLowerCase().includes(query);
-            });
-
-            applySort(filtered);
-        });
+        searchInput.addEventListener("input", debounce(function () {
+            applyFilters();
+        }, 300));
     }
 
 
-    // Category Filter Dropdown — Higher-Order Function: .filter()
+    // Category Filter — Higher-Order Function: .filter()
     var categoryFilter = document.getElementById("categoryFilter");
 
     if (categoryFilter) {
@@ -290,32 +295,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Combined filter + sort pipeline using HOFs
+    // Combined filter + sort pipeline
     function applyFilters() {
         var query = searchInput ? searchInput.value.toLowerCase() : '';
         var category = categoryFilter ? categoryFilter.value : 'all';
 
-        // Step 1: .filter() by search query
         var results = allProducts.filter(function (item) {
             return item.title.toLowerCase().includes(query)
                 || item.category.toLowerCase().includes(query);
         });
 
-        // Step 2: .filter() by category
         if (category !== 'all') {
             results = results.filter(function (item) {
                 return item.category === category;
             });
         }
 
-        // Step 3: apply sort
         applySort(results);
     }
 
     function applySort(products) {
         var value = sortSelect ? sortSelect.value : 'default';
 
-        // .slice() to copy, then .sort()
         var sorted = products.slice().sort(function (a, b) {
             if (value === "low-high") return a.price - b.price;
             if (value === "high-low") return b.price - a.price;
@@ -326,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderProducts(sorted);
     }
 
-    // Favorites count using .reduce()
+    // Favorites count — Higher-Order Function: .reduce()
     function getFavoritesCount() {
         return favorites.reduce(function (count) {
             return count + 1;

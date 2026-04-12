@@ -1,3 +1,4 @@
+/* Filter Tabs */
 .collection-section {
     padding: 60px 60px 100px;
 }
@@ -42,7 +43,7 @@
     display: none;
 }
 
-
+/* Heritage Collection */
 .heritage-section {
     padding: 80px 60px 100px;
     background-color: #0d120d;
@@ -118,7 +119,7 @@
     margin-top: 4px;
 }
 
-
+/* Mobile */
 @media (max-width: 768px) {
     .collection-section,
     .heritage-section {
@@ -136,7 +137,45 @@
     }
 }
 
+/* Loading Spinner */
+.loading-spinner {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 60px 0;
+}
 
+.spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #d4af37;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+[data-theme="light"] .spinner {
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: #a08020;
+}
+
+[data-theme="light"] .loading-spinner p {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+/* API Products */
 .api-section {
     padding: 80px 60px 60px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -175,6 +214,7 @@
     letter-spacing: 0.5px;
 }
 
+/* API Controls */
 .api-controls {
     grid-column: 1 / -1;
     display: flex;
@@ -231,6 +271,7 @@
     color: #fff;
 }
 
+/* API Grid */
 #product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -268,6 +309,7 @@
     letter-spacing: 0.5px;
 }
 
+/* API Card Details */
 .api-rating {
     color: #d4af37;
     font-size: 12px;
@@ -299,6 +341,7 @@
     margin-top: 4px;
 }
 
+/* Badges */
 .api-discount {
     position: absolute;
     top: 12px;
@@ -335,7 +378,7 @@
     letter-spacing: 0.5px;
 }
 
-
+/* Light Mode */
 [data-theme="light"] .filter-tab {
     border-color: rgba(0, 0, 0, 0.12);
     color: rgba(0, 0, 0, 0.5);

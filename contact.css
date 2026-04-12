@@ -1,3 +1,4 @@
+/* Contact Layout */
 .contact-section {
     padding: 80px 60px 100px;
 }
@@ -10,6 +11,7 @@
     margin: 0 auto;
 }
 
+/* Contact Form */
 .contact-form-wrapper h2,
 .contact-info h2 {
     font-family: 'Playfair Display', serif;
@@ -72,6 +74,7 @@
     opacity: 1;
 }
 
+/* Contact Info */
 .contact-info {
     padding-top: 10px;
 }
@@ -117,6 +120,7 @@
     color: #a0a0a0;
 }
 
+/* FAQ */
 .faq-section {
     padding: 80px 60px 100px;
     background-color: #0d120d;
@@ -180,6 +184,7 @@
     line-height: 1.7;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
     .contact-section,
     .faq-section {

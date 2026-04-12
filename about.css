@@ -1,3 +1,4 @@
+/* About Hero */
 .about-hero {
     padding: 120px 60px 80px;
     text-align: center;
@@ -19,6 +20,7 @@
     line-height: 1.8;
 }
 
+/* Values */
 .values-section {
     padding: 100px 60px;
     background-color: #0d120d;
@@ -64,6 +66,7 @@
     line-height: 1.7;
 }
 
+/* Founder */
 .founder-section {
     padding: 100px 60px;
     text-align: center;
@@ -96,6 +99,7 @@
     text-transform: uppercase;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
     .values-section,
     .founder-section,
